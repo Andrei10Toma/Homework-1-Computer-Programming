@@ -1,0 +1,78 @@
+Toma Andrei 311CB
+-----------------DECLARATII-----------------
+#define MAX 500
+#define DIM 4
+#define MASCA 128
+#define SIZE_OF_CHAR 8
+Am declarat acest define-uri pentru coding style si semnifica dimensiunile maximale ale vectorilor utilizati pentru a citi adresele ip, o masca pe care  o vom folosi la shiftari si dimensiunea unui octet in biti.
+Variabilele au nume sugestiv pentru rezolvarea taskurilor.
+MSK_2_10[DIM] reprezinta scrierea zecimala a mastii 2 (MSK_2).
+contor este variabila care determina numarul de teste.
+Celelalte variabile le vom prezenta prin intermediul taskurilor pentru a intelege mai bine utilitatea lor.
+
+
+-----------------MOD DE CITIRE-----------------
+Variabilele sunt declarate de tip unsigned char (cu descriptorul %hhu) si int (cu descriptorul %d).
+Pentru masti si adresele ip vom folosi vectori de cate 4 elemente care vor citi cate cate un octet corespunzator fiecarei parti a adresei.
+Ex: IP_1[DIM] si MSK_1[DIM] se vor citi:
+	IP_1[0]=192 IP_1[1]=168 IP_1[2]=25 IP_1[3]=6;
+	MSK_1[0]=255 MSK_2[1]=240 MSK_2[2]=0 MSK_2[3]=0.
+
+
+-----------------TASK 0-----------------
+Am afisat print intermediul functiei printf "IP_1/MSK_2".
+
+
+-----------------TASK 1-----------------
+Pentru acest task vom folosi un tablou MSK_2_10[DIM] prin care vom reprezenta in format zecimal masca 2. Intializam valoarea fiecarei componente a vectorului cu 0. 
+Variabila c retine valoarea mastii 2 pentru ca valoarea acesteia sa nu fie efectuata.
+Variabila K reprezinta indicele vectorului MSK_2_10.
+Prin variabila i se realizeaza shiftarile la dreapta a lui 128 (reprezentat in baza binara 10000000)
+Porgramul transforma bitii din 0 in 1 atata timp cat c este diferit de 0. Cand are loc a 8-a shiftare a lui 128 se trece la urmatoarul indice al lui MSK_2_10 si i-ul devine -1 astefl incat dupa incrementare sa fie 0.
+while (c>0)
+		{
+			MSK_2_10[K]=((MSK_2_10[K]) | (128>>i));
+			if (i==7)
+			{
+				i=-1;
+				K++;
+			}
+			c--;
+			i++;
+
+		}
+
+
+-----------------TASK 2-----------------
+Pentru a afisa numere in baza 8 si in baza 16 am folosit descriptorii specifici: %o, respectiv, %X.
+
+
+-----------------TASK 3-----------------
+Pentru a afla adresa de retea a ip-ului 1 am folosit un vector AD_R_1[DIM]. Pentru a afla componentele acestuia vom face & (si) logic intre elementele vectorului corespunzator ip-ului 1 (IP_1[DIM]) si vectorului corespunzator scrierii in baza zecimala a mastii 2 (MSK_2_10[DIM]).
+
+
+-----------------TASK 4-----------------
+Pentru a afla adresa de broadcast a ip-ului 1 am folosit un vector AD_B_1[DIM]. Pentru a afla componetele acestuia vom face | (sau) logic intre elementele vectorului corespunztor ip-ului 1 (IP_1[DIM]) si vectorul corespunzator scrierii in baza zecimala a mastii 2 (MSK_2_10[DIM]).
+
+
+-----------------TASK 5-----------------
+Pentru a verifica daca IP_1 si IP_2 fac parte din aceeasi retea vom compara vectorul deja existent AD_R_1[DIM] si vectorul nou creat AD_R_2[DIM] care va retine adresa de retea a ip-ului 2. Daca cei 2 vectori sunt egali atunci cele 2 ip-uri se va afisa mesajul "DA", altfel se va afisa "NU".
+
+
+-----------------TASK 6-----------------
+Vom folosi niste variabile ajutatoare de tip integer:
+ct=0(aceasta valoare ne va spune daca s-a executat comanda break); ck=-1(octetul in care se gaseste primul 0); cj=-1(pozitia primul 0 in octetul gasit); OK=1(validitatea mastii). Pentru a gasi primul 0 vom face shiftari la dreapta consecutive ale lui 128 facand & logic intre shiftarea respectiva si MSK_1[K]. Dupa ce va gasi primul 0 va cauta o valoare diferita de 0 mai intai in pozitiile ramase din octetul in care a gasit 0-ul dupa care va trece la urmatorii ovteti. Daca gaseste o valoare diferita de 0 OK va deveni 0 ceea ce inseamna ca masca este introdusa gresit, altfel daca nu gaseste o astfel de valoare OK va ramane egal cu 1 ceea ce inseamna ca masca este valida.
+
+
+-----------------TASK 7-----------------
+In acest task ne vom folosi de variabilele de la TASK-ul precedent. In cazul in care OK==1 atunci se va afisa masca. In caz contrar vom transforma toti bitii mastii 1 in 0 dupa gasirea primului 0 prin intermediul operatiei & logic intre masca 1 si ~(128>>j).
+
+
+-----------------TASK 8-----------------
+Pentru a afisa componentele ip-ului 1 in baza binara ne vom folosi de operatia & logic pentru a gasit bitii fixati de 1 si 0. In cazul in care prin intermediul operatiei ne da ceva diferit de 0 se va afisa "1", altfel se va afisa "0".
+
+
+-----------------TASK 9-----------------
+In acest task ne vom folosi de algoritmul de la taskul 1 pentru transfomarea mastii in baza 10. Dupa ce am transformat masca componentei NET[j][4] in baza zecimala, vom verifica daca adresa de retea a ip-ului 2 corespunde cu scrierea din matricea NET[MAX][4]. In cazul in care corespunde vom afisa indicele j<MAX.
+
+
